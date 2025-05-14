@@ -12,6 +12,8 @@ class InventoryUpdate(BaseModel):
 
 class Inventory(BaseModel):
     id: int
+    product_id: int
+    quantity: int
 
     class Config:
         from_attributes = True
