@@ -12,5 +12,6 @@ class ProductCreate(ProductBase):
 class Product(BaseModel):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = {
+        "from_attributes": True
+    }
