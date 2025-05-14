@@ -7,8 +7,11 @@ class InventoryBase(BaseModel):
 class InventoryCreate(InventoryBase):
     pass
 
-class Inventory(InventoryBase):
+class InventoryUpdate(BaseModel):
+    quantity: int
+
+class Inventory(BaseModel):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

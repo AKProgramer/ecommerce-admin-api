@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from typing import List
 from .. import schemas, models, database
 
 router = APIRouter()
@@ -12,11 +13,11 @@ def get_db():
     finally:
         db.close()
 
-@router.get("/", response_model=list[schemas.Sale])
+@router.get("/", response_model=List[schemas.Sale])
 def get_sales(db: Session = Depends(get_db)):
     return db.query(models.Sale).all()
 
-@router.get("/filter", response_model=list[schemas.Sale])
+@router.get("/filter", response_model=List[schemas.Sale])
 def filter_sales(start_date: str, end_date: str, db: Session = Depends(get_db)):
     return db.query(models.Sale).filter(models.Sale.sale_date.between(start_date, end_date)).all()
 
