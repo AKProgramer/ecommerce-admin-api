@@ -32,12 +32,15 @@ def get_inventory(db: Session = Depends(get_db)):
 def low_stock_alert(threshold: int = 10, db: Session = Depends(get_db)):
     return db.query(models.Inventory).filter(models.Inventory.quantity < threshold).all()
 
-@router.put("/update/{product_id}", response_model=schemas.Inventory)
-def update_inventory(product_id: int, payload: InventoryUpdate, db: Session = Depends(get_db)):
-    inventory_item = db.query(models.Inventory).filter(models.Inventory.product_id == product_id).first()
+@router.put("/update/{inventory_id}", response_model=schemas.Inventory)
+def update_inventory(inventory_id: int, payload: InventoryUpdate, db: Session = Depends(get_db)):
+    print(f"Received inventory_id: {inventory_id}")
+    inventory_item = db.query(models.Inventory).filter(models.Inventory.id == inventory_id).first()
     if inventory_item:
+        print(f"Found inventory item: {inventory_item.id}, Product ID: {inventory_item.product_id}")
         inventory_item.quantity = payload.quantity
         db.commit()
         db.refresh(inventory_item)
         return inventory_item
-    return {"error": "Product not found in inventory"}
+    print("Inventory item not found")
+    raise HTTPException(status_code=404, detail="Inventory item not found")
