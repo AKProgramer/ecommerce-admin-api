@@ -57,14 +57,31 @@ def setup_and_teardown():
 def test_get_sales():
     response = client.get("/sales")
     assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
 
 def test_filter_sales():
     response = client.get("/sales/filter?start_date=2025-05-01&end_date=2025-05-05")
     assert response.status_code == 200
+    assert isinstance(response.json(), list)
+
 
 def test_compare_revenue():
-    response = client.get("/sales/compare?period1_start=2025-05-01&period1_end=2025-05-03&period2_start=2025-05-04&period2_end=2025-05-05")
+    response = client.get(
+        "/sales/compare?period1_start=2025-05-01&period1_end=2025-05-03&period2_start=2025-05-04&period2_end=2025-05-05"
+    )
     assert response.status_code == 200
+    response_data = response.json()
+    assert "period1_revenue" in response_data
+    assert "period2_revenue" in response_data
+
+
+def test_get_daily_revenue():
+    response = client.get("/revenue/daily")
+    assert response.status_code == 200
+    response_data = response.json()
+    assert "date" in response_data
+    assert "total_revenue" in response_data
 
 # Test Inventory Routes
 def test_get_inventory():
