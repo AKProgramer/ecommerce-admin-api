@@ -21,32 +21,25 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
    git clone <repository-url>
    ```
 
-2. Navigate to the project directory:
-   ```bash
-   cd ecommerce-admin-api
+
+2. Add your MySQL database credentials in the `app/database.py` file:
+   ```
+   DB_USERNAME = "root"
+   DB_PASSWORD = "1234"
+   DB_HOST = "localhost"
+   DB_NAME = "ecommerce_db"
    ```
 
-3. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\activate
-   ```
-
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. Set up the database:
+3. Populate the database with demo data:
    - Ensure MySQL is running.
-   - Run the `generate_demo_data.sql` script to create the database and populate it with demo data.
+   - Run the `script/generate_demo_data.sql` script to create the database and populate it with demo data.
 
-6. Start the FastAPI server:
+4. Start the FastAPI server:
    ```bash
    uvicorn app.main:app --reload
    ```
 
-7. Access the API documentation at:
+5. Access the API documentation at:
    - Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
    - ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
@@ -99,5 +92,5 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
 ## Testing
 Run unit tests using:
 ```bash
-pytest
+pytest tests/test_routes.py 
 ```
