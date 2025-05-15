@@ -13,6 +13,9 @@ venv/
 ENV/
 .env
 
+# Environment variables
+.env
+
 # Installer logs
 dist/
 build/
