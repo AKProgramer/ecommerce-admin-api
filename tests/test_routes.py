@@ -134,3 +134,43 @@ def test_update_inventory():
         db.commit()
     finally:
         db.close()
+
+def test_get_inventory_history():
+    response = client.get("/inventory-history/")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    if response.json():
+        assert "id" in response.json()[0]
+        assert "inventory_id" in response.json()[0]
+        assert "product_id" in response.json()[0]
+        assert "change_amount" in response.json()[0]
+        assert "reason" in response.json()[0]
+        assert "changed_at" in response.json()[0]
+
+def test_get_inventory_history_by_inventory():
+    response = client.get("/inventory-history/by-inventory/1")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    for item in response.json():
+        assert item["inventory_id"] == 1
+
+def test_get_inventory_history_by_product():
+    response = client.get("/inventory-history/by-product/1")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    for item in response.json():
+        assert item["product_id"] == 1
+
+def test_sales_by_product():
+    response = client.get("/sales-analytics/by-product/1")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    for sale in response.json():
+        assert sale["product_id"] == 1
+
+def test_sales_by_category():
+    response = client.get("/sales-analytics/by-category/1")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    for sale in response.json():
+        assert sale["product_id"] is not None

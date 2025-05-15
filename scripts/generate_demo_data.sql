@@ -5,6 +5,7 @@ USE ecommerce_db;
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS sales;
 DROP TABLE IF EXISTS inventory;
+DROP TABLE IF EXISTS inventory_history;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS categories;
 
@@ -29,6 +30,18 @@ CREATE TABLE inventory (
     id INT PRIMARY KEY AUTO_INCREMENT,
     product_id INT,
     quantity INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+-- Create Inventory History Table
+CREATE TABLE inventory_history (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    inventory_id INT,
+    product_id INT,
+    change_amount INT,
+    reason VARCHAR(255),
+    changed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (inventory_id) REFERENCES inventory(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
@@ -67,6 +80,17 @@ INSERT INTO inventory (product_id, quantity) VALUES
 (4, 200),
 (5, 25),
 (6, 150);
+
+-- Insert Inventory History
+INSERT INTO inventory_history (inventory_id, product_id, change_amount, reason, changed_at) VALUES
+(1, 1, 10, 'Initial stock', '2025-04-30 09:00:00'),
+(1, 1, -2, 'Sale', '2025-05-01 10:05:00'),
+(2, 2, 30, 'Initial stock', '2025-04-30 09:10:00'),
+(3, 3, 100, 'Initial stock', '2025-04-30 09:20:00'),
+(4, 4, 200, 'Initial stock', '2025-04-30 09:30:00'),
+(5, 5, 25, 'Initial stock', '2025-04-30 09:40:00'),
+(6, 6, 150, 'Initial stock', '2025-04-30 09:50:00'),
+(6, 6, -3, 'Sale', '2025-05-05 15:25:00');
 
 -- Insert Sales
 INSERT INTO sales (product_id, quantity, total_price, sale_date) VALUES

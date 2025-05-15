@@ -13,6 +13,10 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
 ### Inventory Management
 - View current inventory status, including low stock alerts.
 - Update inventory levels and track changes over time.
+- **Track inventory change history (audit trail).**
+
+### Sales Analytics
+- Retrieve sales data by product and by category.
 
 ## Setup Instructions
 
@@ -20,7 +24,6 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
    ```bash
    git clone https://github.com/AKProgramer/ecommerce-admin-api.git
    ```
-
 
 2. Add your MySQL database credentials in the `app/database.py` file:
    ```
@@ -82,6 +85,15 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
 - `GET /inventory/low-stock`: Get low stock alerts.
 - `PUT /inventory/update/{product_id}`: Update inventory levels.
 
+### Inventory History
+- `GET /inventory-history/`: Retrieve all inventory change history records.
+- `GET /inventory-history/by-inventory/{inventory_id}`: Get history for a specific inventory item.
+- `GET /inventory-history/by-product/{product_id}`: Get history for a specific product.
+
+### Sales Analytics
+- `GET /sales-analytics/by-product/{product_id}`: Get all sales for a specific product.
+- `GET /sales-analytics/by-category/{category_id}`: Get all sales for a specific category.
+
 ## Dependencies
 - Python 3.8+
 - FastAPI
@@ -94,3 +106,10 @@ Run unit tests using:
 ```bash
 pytest tests/test_routes.py 
 ```
+
+## Missing Features / Improvements
+
+- Tracking inventory changes over time (history/audit) is not implemented.
+- Endpoints for sales data by product and category are not explicitly present.
+- Revenue analysis for weekly, monthly, and annual basis is not implemented (only daily).
+- No explicit indexing in the SQL script, but primary keys are present.
