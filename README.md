@@ -18,7 +18,7 @@ This project is a back-end API for an e-commerce admin dashboard, built using Py
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AKProgramer/ecommerce-admin-api.git
    ```
 
 
